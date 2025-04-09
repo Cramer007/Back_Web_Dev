@@ -36,20 +36,25 @@ fastify.post('/api/users', async function handler (request, reply) {
 })
 
 fastify.post('/api/token', async function handler (request, reply) {
-  const user = await User.find({username : request.body.username})
-  const password = request.body.password
-  if (!user.comparePassword(password)){
-    reply .send(401)
-    return {
-      error : 401,
-      message: 'Invalid credentials'
-    }
+  const user = await User.findOne({ username: request.body.username });
+
+  if (!user) {
+    reply.status(401).send({ error: 401, message: 'User not found' });
+    return;
+  }
+
+  const password = request.body.password;
+
+  if (!user.comparePassword(password)) {
+    reply.status(401).send({ error: 401, message: 'Invalid credentials' });
+    return;
   }
 
   return {
-    token : createJWT()
-  }
-})
+    token: createJWT() 
+  };
+});
+
 
 function createJWT (){
   return 'todo'
