@@ -5,6 +5,8 @@ import fastifyCors from '@fastify/cors';
 import User from './users/user-model.js'
 import { connect } from './db/connect.js'
 import { compareHash, getHashFromClearText } from './utils/crypto.js'
+import artworkRoutes from './artworks/artwork-routes.js'
+import Artwork from './artworks/artwork-model.js'
 
 dotenv.config()
 
@@ -59,6 +61,10 @@ fastify.post('/api/token', async function handler (request, reply) {
 function createJWT (){
   return 'todo'
 }
+
+await fastify.register(artworkRoutes)
+
+
 
 // Run the server!
 try {
