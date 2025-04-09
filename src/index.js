@@ -1,6 +1,7 @@
 // Import the framework and instantiate it
 import Fastify from 'fastify'
 import dotenv from 'dotenv'
+import fastifyCors from '@fastify/cors';
 import User from './users/user-model.js'
 import { connect } from './db/connect.js'
 import { compareHash, getHashFromClearText } from './utils/crypto.js'
@@ -13,7 +14,11 @@ const fastify = Fastify({
   logger: true
 })
 
-// Declare a route
+await fastify.register(fastifyCors, {
+  origin: '*', // Ou mets ton lien Netlify ici pour être plus strict
+});
+
+// Declare a aroute
 fastify.get('/api/hello', async function handler (request, reply) {
   return { hello: 'world' }
 })
