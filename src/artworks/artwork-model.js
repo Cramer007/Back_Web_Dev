@@ -5,7 +5,8 @@ const artworkSchema = new mongoose.Schema({
   artist: String,
   image: String,
   price: Number,
-  likedBy: [String], // tableau d'usernames
+  likedBy: [String],
+  username: String   // tableau d'usernames
 })
 
 const Artwork = mongoose.model('Artwork', artworkSchema)
